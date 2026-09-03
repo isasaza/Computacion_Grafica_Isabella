@@ -82,7 +82,7 @@ scene.add( gridHelper );
 const axesHelper = new THREE.AxesHelper( 5 );
 scene.add( axesHelper );
 
-  const wireframeBtn = document.getElementById( 'wireframeBtn' );
+const wireframeBtn = document.getElementById( 'wireframeBtn' );
 
 wireframeBtn.addEventListener( 'click', () => {
     if ( isWireframe === false ) {
@@ -106,7 +106,6 @@ wireframeBtn.addEventListener( 'click', () => {
     }
 } );
 
-
 function animate( time ) {
   meshes.forEach( ( mesh ) => {
     const speed = 0.0009;
@@ -117,5 +116,3 @@ function animate( time ) {
   renderer.render( scene, camera );
   controls.update();
 }
-
-  
