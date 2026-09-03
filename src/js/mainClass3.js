@@ -105,7 +105,7 @@ wireframeBtn.addEventListener( 'click', () => {
         wireframeBtn.textContent = 'Wireframe: OFF';
     }
 } );
-{
+
 
 
 function animate( time ) {
@@ -117,5 +117,4 @@ function animate( time ) {
 
   renderer.render( scene, camera );
   controls.update();
-}
 }
