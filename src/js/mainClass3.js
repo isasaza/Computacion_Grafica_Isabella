@@ -108,18 +108,14 @@ wireframeBtn.addEventListener( 'click', () => {
 
 
 function animate( time ) {
+  meshes.forEach( ( mesh ) => {
+    const speed = 0.0009;
+    mesh.rotation.x = time * speed;
+    mesh.rotation.y = time * speed;
+  } );
+
   renderer.render( scene, camera );
   controls.update();
-
-  
-    }
-
-meshes.forEach(( mesh ) => 
-  {
-  const speed = 0.0009;
-mesh.rotation.x = time* speed;
-  mesh.rotation.y = time * speed;
-
-});
+}
 
   
