@@ -105,6 +105,8 @@ wireframeBtn.addEventListener( 'click', () => {
         wireframeBtn.textContent = 'Wireframe: OFF';
     }
 } );
+{
+
 
 function animate( time ) {
   meshes.forEach( ( mesh ) => {
@@ -115,4 +117,5 @@ function animate( time ) {
 
   renderer.render( scene, camera );
   controls.update();
+}
 }
