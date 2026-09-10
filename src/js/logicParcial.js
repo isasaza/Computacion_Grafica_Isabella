@@ -8,11 +8,11 @@ scene.background = new THREE.Color(0x0f172a); // Noche azulada
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.set(0, 12, 25);
  
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+const canvasElement = document.getElementById('miCanvas');
+const renderer = new THREE.WebGLRenderer({ canvas: canvasElement, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight - 56);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-document.body.appendChild(renderer.domElement);
  
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 10, 0);
