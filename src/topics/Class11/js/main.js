@@ -56,8 +56,8 @@ function onWindowResize() {
 window.addEventListener( 'resize', onWindowResize );
 
 // ****************** Carrusel de personajes ******************
-const nombres = [ 'BMO (OBJ)', 'BMO (GLTF)', 'BMO (GLB)' ];
-const modelos = [ null, null];   
+const nombres = [ 'BMO (OBJ)', 'BMO (GLTF)' ];
+const modelos = [ null, null,];   
 let indice = 0;
 
 function mostrar() {
