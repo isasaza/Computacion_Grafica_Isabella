@@ -15,7 +15,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setAnimationLoop( animate );
 document.body.appendChild( renderer.domElement );
 
-const ambientLight = new THREE.AmbientLight( 0xffffff, 0.4 );
+const ambientLight = new THREE.AmbientLight( 0xffffff, 0.5 );
 scene.add( ambientLight );
 
 const light = new THREE.DirectionalLight( 0xffffff, 1.2 );
