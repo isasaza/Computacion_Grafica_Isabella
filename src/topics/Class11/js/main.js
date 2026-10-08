@@ -18,9 +18,9 @@ document.body.appendChild( renderer.domElement );
 const ambientLight = new THREE.AmbientLight( 0xffffff, 0.5 );
 scene.add( ambientLight );
 
-const light = new THREE.DirectionalLight( 0xffffff, 1.2 );
-light.position.set( 5, 10, 7 );
-scene.add( light );
+const pointLight = new THREE.PointLight( 0xffffff, 150, 100 );
+pointLight.position.set( 0, 3, 10 );
+scene.add( pointLight );
 
 const controls = new OrbitControls( camera, renderer.domElement );
 camera.position.set( 0, -1.5, 9 );
