@@ -1,5 +1,8 @@
 import * as THREE from 'three';
+
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import {OBJLoader} from 'three/addons/loaders/OBJLoader.js';
+import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -55,7 +58,12 @@ function onWindowResize() {
 window.addEventListener('resize', onWindowResize);
 
 const objLoader = new OBJLoader();
-objLoader.load('./models/obj-mtl/BMO.obj', (root) => {
-    scene.add(root);
+
+ const mtlLoader = new MTLLoader();
+mtlLoader.load('./models/obj-mtl/BMO.mtl', (mtl) => {
+    mtl.preload();
+    objLoader.setMaterials(mtl);
+    objLoader.load('./models/obj-mtl/BMO.obj', (root) => {
+        scene.add(root);
+    });
 });
-    
