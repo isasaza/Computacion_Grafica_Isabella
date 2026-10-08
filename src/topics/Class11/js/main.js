@@ -20,12 +20,10 @@ document.body.appendChild( renderer.domElement );
 const ambientLight = new THREE.AmbientLight( 0xffffff, 0.4 );
 scene.add( ambientLight );
 
-const light = new THREE.DirectionalLight( 0xffffff, 1.2 );
-light.position.set( 5, 10, 7 );
-scene.add( light );
+
 
 const pointLight = new THREE.PointLight( 0xffffff, 3, 0, 0 );
-pointLight.position.set( 0, 2, 5 );   // de frente a los BMO
+pointLight.position.set( 20, 2, 5 );   // de frente a los BMO
 scene.add( pointLight );
 
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -57,7 +55,40 @@ function onWindowResize() {
 
 window.addEventListener( 'resize', onWindowResize );
 
-// ****************** OBJ + MTL (izquierda) ******************
+// ****************** Carrusel de personajes ******************
+const nombres = [ 'BMO (OBJ)', 'BMO (GLTF)', 'BMO (GLB)' ];
+const modelos = [ null, null, null ];   
+let indice = 0;
+
+function mostrar() {
+  modelos.forEach( ( m, i ) => {
+    if ( m ) m.visible = ( i === indice );
+  });
+  document.getElementById( 'nombre' ).textContent = nombres[ indice ];
+}
+
+function siguiente() {
+  indice = ( indice + 1 ) % modelos.length;
+  mostrar();
+}
+
+function anterior() {
+  indice = ( indice - 1 + modelos.length ) % modelos.length;
+  mostrar();
+}
+
+document.getElementById( 'flechaDer' ).onclick = siguiente;
+document.getElementById( 'flechaIzq' ).onclick = anterior;
+
+
+function registrar( root, slot ) {
+  root.position.set( 0, 0, 0 );
+  root.visible = false;
+  scene.add( root );
+  modelos[ slot ] = root;
+  mostrar();
+}
+
 const objLoader = new OBJLoader();
 const mtlLoader = new MTLLoader();
 
@@ -65,16 +96,18 @@ mtlLoader.load( '../models/obj-mtl/BMO.mtl', ( mtl ) => {
     mtl.preload();
     objLoader.setMaterials( mtl );
     objLoader.load( '../models/obj-mtl/BMO.obj', ( root ) => {
-        root.position.set( 2, 0, 3 );
-        scene.add( root );
+        registrar( root, 0 );
     });
 });
 
-// ****************** GLTF (derecha) ******************
+// gtlf
 const gltfLoader = new GLTFLoader();
 
 gltfLoader.load( '../models/gltf/BMO.gltf', ( gltf ) => {
-    const root = gltf.scene;
-    root.position.set( 2, 0, -3 );
-    scene.add( root );
+    registrar( gltf.scene, 1 );
+});
+
+// glb
+gltfLoader.load( '../models/glb/BMO.glb', ( gltf ) => {
+    registrar( gltf.scene, 1 );
 });
