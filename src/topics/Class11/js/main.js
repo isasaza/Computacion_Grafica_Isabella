@@ -53,4 +53,9 @@ function onWindowResize() {
 
 // 3. Listen for the resize event
 window.addEventListener('resize', onWindowResize);
+
+const objLoader = new OBJLoader();
+objLoader.load('./models/obj-mtl/BMO.obj', (root) => {
+    scene.add(root);
+});
     
