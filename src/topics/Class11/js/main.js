@@ -19,12 +19,12 @@ const ambientLight = new THREE.AmbientLight( 0xffffff, 0.5 );
 scene.add( ambientLight );
 
 const pointLight = new THREE.PointLight( 0xffffff, 3, 0, 0 );
-pointLight.position.set( 0, 2, 5 );
+pointLight.position.set( 20, 1, 2 );
 scene.add( pointLight );
 
-// para ver dónde queda la luz (bórralo después)
+
 const pointLightHelper = new THREE.PointLightHelper( pointLight, 0.3 );
-scene.add( pointLightHelper );
+//scene.add( pointLightHelper );
 
 const controls = new OrbitControls( camera, renderer.domElement );
 camera.position.set( 0, -1.5, 9 );
