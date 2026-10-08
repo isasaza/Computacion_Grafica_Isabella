@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import {OBJLoader} from 'three/addons/loaders/OBJLoader.js';
-import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -15,22 +16,23 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setAnimationLoop( animate );
 document.body.appendChild( renderer.domElement );
 
-const ambientLight = new THREE.AmbientLight( 0xffffff, 0.5 );
+// Luces
+const ambientLight = new THREE.AmbientLight( 0xffffff, 0.4 );
 scene.add( ambientLight );
 
+const light = new THREE.DirectionalLight( 0xffffff, 1.2 );
+light.position.set( 5, 10, 7 );
+scene.add( light );
+
 const pointLight = new THREE.PointLight( 0xffffff, 3, 0, 0 );
-pointLight.position.set( 20, 1, 2 );
+pointLight.position.set( 0, 2, 5 );   // de frente a los BMO
 scene.add( pointLight );
 
-
-const pointLightHelper = new THREE.PointLightHelper( pointLight, 0.3 );
-//scene.add( pointLightHelper );
-
 const controls = new OrbitControls( camera, renderer.domElement );
-camera.position.set( 0, -1.5, 9 );
+camera.position.set( 0, 2, 9 );
 controls.update();
 
-// Grid  Helper
+// Grid Helper
 const size = 10;
 const divisions = 10;
 const gridHelper = new THREE.GridHelper( size, divisions );
@@ -45,29 +47,34 @@ function animate( time ) {
   controls.update();
 }
 
-// 2. Handle Responsive Resizing
+// Responsive resizing
 function onWindowResize() {
-  // Update camera aspect ratio based on the new container bounds
   camera.aspect = window.innerWidth / window.innerHeight;
-  
-  // Crucial: Update the projection matrix to apply changes
   camera.updateProjectionMatrix();
-
-  // Update renderer size and pixel ratio
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) );
 }
 
-// 3. Listen for the resize event
-window.addEventListener('resize', onWindowResize);
+window.addEventListener( 'resize', onWindowResize );
 
+// ****************** OBJ + MTL (izquierda) ******************
 const objLoader = new OBJLoader();
-
 const mtlLoader = new MTLLoader();
-mtlLoader.load('../models/obj-mtl/BMO.mtl', (mtl) => {
+
+mtlLoader.load( '../models/obj-mtl/BMO.mtl', ( mtl ) => {
     mtl.preload();
-    objLoader.setMaterials(mtl);
-    objLoader.load('../models/obj-mtl/BMO.obj', (root) => {
-        scene.add(root);
+    objLoader.setMaterials( mtl );
+    objLoader.load( '../models/obj-mtl/BMO.obj', ( root ) => {
+        root.position.set( 2, 0, 3 );
+        scene.add( root );
     });
+});
+
+// ****************** GLTF (derecha) ******************
+const gltfLoader = new GLTFLoader();
+
+gltfLoader.load( '../models/gltf/BMO.gltf', ( gltf ) => {
+    const root = gltf.scene;
+    root.position.set( 2, 0, -3 );
+    scene.add( root );
 });
