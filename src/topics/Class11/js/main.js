@@ -59,11 +59,11 @@ window.addEventListener('resize', onWindowResize);
 
 const objLoader = new OBJLoader();
 
- const mtlLoader = new MTLLoader();
-mtlLoader.load('./models/obj-mtl/BMO.mtl', (mtl) => {
+const mtlLoader = new MTLLoader();
+mtlLoader.load('../models/obj-mtl/BMO.mtl', (mtl) => {
     mtl.preload();
     objLoader.setMaterials(mtl);
-    objLoader.load('./models/obj-mtl/BMO.obj', (root) => {
+    objLoader.load('../models/obj-mtl/BMO.obj', (root) => {
         scene.add(root);
     });
 });
